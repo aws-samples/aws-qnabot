@@ -33,6 +33,10 @@ module.exports = {
                     KeyType: 'HASH',
                 },
             ],
+            TimeToLiveSpecification: {
+                AttributeName: "ttl",
+                Enabled: true
+            },
         },
         Metadata: util.cfnNag(['W74']),
     },

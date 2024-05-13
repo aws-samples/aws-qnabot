@@ -76,12 +76,18 @@ async function get_userInfo(userId, idattrs, userPrefs = undefined) {
     return req_userInfo;
 }
 
-async function update_userInfo(userId, req_userInfo) {
+async function update_userInfo(userId, req_userInfo, ttlDays) {
     const res_userInfo = _.cloneDeep(req_userInfo);
     const dt = new Date();
     res_userInfo.FirstSeen = req_userInfo.FirstSeen || dt.toString();
     res_userInfo.LastSeen = dt.toString();
     res_userInfo.InteractionCount = req_userInfo.InteractionCount + 1;
+    // set userInfo record TTL
+    if (ttlDays > 0) {
+        const secondsPerDay = 24 * 60 * 60;
+        const ttlDate = new Date(dt.getTime() + ttlDays * secondsPerDay * 1000);
+        res_userInfo.ttl = Math.floor(ttlDate.getTime() / 1000);
+    }
     return res_userInfo;
 }
 
@@ -213,11 +219,11 @@ module.exports = async function preprocess(req, res) {
     _.set(req, '_userInfo', req_userInfo);
     // set the userPrefs session attribute to the value returned from DDB
     _.set(req, 'session.userPrefs', _.get(req_userInfo, 'userPrefs', {}));
-
     // Add _userInfo to res, with updated timestamps
     // May be further modified by lambda hooks
     // Will be saved back to DynamoDB in userInfo.js
-    const res_userInfo = await update_userInfo(userId, req_userInfo);
+    const ttlDays = _.get(req, '_settings.USERINFO_TTL_DAYS', 0)
+    const res_userInfo = await update_userInfo(userId, req_userInfo, ttlDays);
     _.set(res, '_userInfo', res_userInfo);
 
     if (_.get(req, '_settings.REMOVE_ID_TOKENS_FROM_SESSION', false)) {
