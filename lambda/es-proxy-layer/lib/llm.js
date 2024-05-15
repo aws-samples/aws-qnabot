@@ -192,12 +192,14 @@ async function get_qa_sagemaker(req, promptTemplateStr, context) {
 }
 
 // Invoke LLM via custom Lambda abstraction
-async function invoke_lambda(prompt, model_params, settings) {
+async function invoke_lambda(prompt, model_params, settings, sessionId, sessionState) {
     const lambda = new Lambda(customSdkConfig('C006', { region }));
     const body = JSON.stringify({
         prompt,
         parameters: model_params,
         settings,
+        sessionId,
+        sessionState,
     });
 
     qnabot.log(`Invoking Lambda: ${process.env.LLM_LAMBDA_ARN}`);
@@ -231,7 +233,11 @@ async function generate_query_lambda(req, promptTemplateStr) {
     const settings = req._settings;
     const [, , , prompt] = await make_qenerate_query_prompt(req, promptTemplateStr);
     qnabot.log(`Prompt: \nGENERATE QUERY PROMPT==>\n${prompt}\n<==PROMPT`);
-    return invoke_lambda(prompt, model_params, settings);
+
+    // Extract sessionId and sessionState from the request
+    const sessionId = req._event.sessionId;
+    const sessionState = req._event.sessionState;
+    return invoke_lambda(prompt, model_params, settings, sessionId, sessionState);
 }
 async function get_qa_lambda(req, promptTemplateStr, context) {
     const model_params = JSON.parse(req._settings.LLM_QA_MODEL_PARAMS || default_params_stg);
@@ -241,7 +247,11 @@ async function get_qa_lambda(req, promptTemplateStr, context) {
     const query = get_query(req);
     const [, , , prompt] = await make_qa_prompt(req, promptTemplateStr, context, input, query);
     qnabot.log(`QUESTION ANSWERING PROMPT: \nPROMPT==>\n${prompt}\n<==PROMPT`);
-    return invoke_lambda(prompt, model_params, settings);
+
+    // Extract sessionId and sessionState from the request
+    const sessionId = req._event.sessionId;
+    const sessionState = req._event.sessionState;
+    return invoke_lambda(prompt, model_params, settings, sessionId, sessionState);
 }
 
 function clean_standalone_query(query) {
