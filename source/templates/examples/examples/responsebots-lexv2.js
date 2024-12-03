@@ -117,7 +117,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -242,7 +242,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -362,7 +362,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -469,7 +469,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -600,7 +600,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -746,7 +746,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -858,7 +858,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -958,7 +958,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1126,7 +1126,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1319,7 +1319,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1499,7 +1499,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1607,7 +1607,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1702,7 +1702,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1818,7 +1818,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -1921,7 +1921,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -2029,7 +2029,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -2124,7 +2124,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -2233,7 +2233,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -2340,7 +2340,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },
@@ -2452,7 +2452,7 @@ exports.resources = {
                     IntentClosingSetting: {
                         ClosingResponse: {
                             MessageGroupsList: [{
-                                Message: { PlainTextMessage: { Value: 'OK. ' } },
+                                Message: { PlainTextMessage: { Value: 'OK.' } },
                             }],
                         },
                     },

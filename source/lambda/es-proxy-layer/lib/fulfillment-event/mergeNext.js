@@ -6,35 +6,78 @@
 const _ = require('lodash');
 const qnabot = require('qnabot/logging');
 
+function mergeMarkdown(hit1, hit2) {
+    // get markdown from first item
+    const md1 = _.get(hit1, 'alt.markdown');
+    let md1_to_merge = hit1.a
+    if (md1) {
+        md1_to_merge = md1.replace(/^[ \t]+/, '').replace(/[ \t]+$/, '')
+    }
+    qnabot.debug('markdown from first hit:', md1_to_merge)
+
+    // get markdown from second item
+    const md2 = _.get(hit2, 'alt.markdown');
+    let md2_to_merge = hit2.a
+    if (md2) {
+        md2_to_merge = md2.replace(/^[ \t]+/, '').replace(/[ \t]+$/, '')
+    }
+    qnabot.debug('markdown from second hit:', md2_to_merge)
+
+    // merge markdown, if present in either item
+    if (md1 || md2) {
+        const md_merged = `${md1_to_merge}\n${md2_to_merge}`
+        qnabot.debug('Merged markdown:', md_merged)
+        _.set(hit2, 'alt.markdown', md_merged);
+    } else {
+        qnabot.debug('Markdown field missing from both items. Skipping markdown merge');
+    }
+}
+
+function mergeSSML(hit1, hit2) {
+    // get SSML from first item
+    const ssml1 = _.get(hit1, 'alt.ssml');
+    let ssml1_to_merge = hit1.a
+    if (ssml1) {
+        // strip <speak> tags
+        qnabot.debug('SSML from first hit:', ssml1)
+        ssml1_to_merge = ssml1.replace(/<speak>|<\/speak>/g, '').trim();
+    }
+
+    // get SSML from second item
+    const ssml2 = _.get(hit2, 'alt.ssml');
+    let ssml2_to_merge = hit2.a
+    if (ssml2) {
+        // strip <speak> tags
+        qnabot.debug('SSML from second hit:', ssml2)
+        ssml2_to_merge = ssml2.replace(/<speak>|<\/speak>/g, '').trim();
+    }
+
+    // merge SSML, if present in either item
+    if (ssml1 || ssml2) {
+        // concatenate, and re-wrap with <speak> tags
+        const ssml_merged = `<speak>${ssml1_to_merge} ${ssml2_to_merge}</speak>`
+        qnabot.debug('Merged SSML:', ssml_merged)
+        _.set(hit2, 'alt.ssml', ssml_merged);
+    } else {
+        qnabot.debug('SSML field missing from both items. Skipping SSML merge');
+    }
+}
+
 function mergeNext(hit1, hit2) {
     if (hit1 === undefined) {
         return hit2;
     }
     qnabot.debug('Merge chained items');
+
+    // merge alternate answers
+    mergeMarkdown(hit1, hit2)
+    mergeSSML(hit1, hit2)
+
     // merge plaintext answer
     if (hit1 && hit1.a) {
-        hit2.a = hit1.a + hit2.a;
+        hit2.a = hit1.a.trim() + ' ' + hit2.a.trim();
     }
-    // merge markdown, if present in both items
-    const md1 = _.get(hit1, 'alt.markdown');
-    const md2 = _.get(hit2, 'alt.markdown');
-    if (md1 && md2) {
-        _.set(hit2, 'alt.markdown', `${md1}\n${md2}`);
-    } else {
-        qnabot.debug('Markdown field missing from one or both items; skip markdown merge');
-    }
-    // merge SSML, if present in both items
-    let ssml1 = _.get(hit1, 'alt.ssml');
-    let ssml2 = _.get(hit2, 'alt.ssml');
-    if (ssml1 && ssml2) {
-        // strip <speak> tags
-        ssml1 = ssml1.replace(/<speak>|<\/speak>/g, '');
-        ssml2 = ssml2.replace(/<speak>|<\/speak>/g, '');
-        // concatenate, and re-wrap with <speak> tags
-        _.set(hit2, 'alt.ssml', `<speak>${ssml1} ${ssml2}</speak>`);
-    } else {
-        qnabot.debug('SSML field missing from one or both items; skip SSML merge');
-    }
+
     // build arrays of Lambda Hooks and arguments
     let lambdahooks = _.get(hit1, 'lambdahooks', []);
     // if hits1 doesn't have a lambdahooks field (no previous merge), then initialize using 'l' and 'args' from hit 1

@@ -197,6 +197,12 @@ async function handleRequest(req, res, botName, botAlias) {
     const lexv2response = await lexV2ClientRequester(params);
     qnabot.log(`Lex V2 response: ${JSON.stringify(lexv2response)}`);
     response.message = _.get(lexv2response, 'messages[0].content', '');
+    response.messages = {}
+    for (const message of _.get(lexv2response, 'messages', [])) {
+        response.messages[message.contentType] = message.content
+    }
+
+
     // lex v2 FallbackIntent match means it failed to fill desired slot(s).
     if (lexv2response.sessionState.intent.name === 'FallbackIntent'
             || lexv2response.sessionState.intent.state === 'Failed') {
@@ -243,13 +249,8 @@ async function processResponse(req, res, hook, msg) {
 
     const botResp = await handleRequest(req, res, hook, 'live');
     qnabot.log(`botResp: ${JSON.stringify(botResp, null, 2)}`);
-    let plainMessage = botResp.message;
-    let ssmlMessage;
-    // if messsage contains SSML tags, strip tags for plain text, but preserve tags for SSML
-    if (plainMessage?.includes('<speak>')) {
-        ssmlMessage = botResp.message;
-        plainMessage = plainMessage.replace(/<\/?[^>]+(>|$)/g, '');  // NOSONAR - javascript:S5852 - input is user controlled and we have a limit on the number of characters
-    }
+    let plainMessage = _.get(botResp, 'messages.PlainText', '');
+    let ssmlMessage = _.get(botResp, 'messages.SSML', '');
     let elicitResponseLoopCount = _.get(res, 'session.qnabotcontext.elicitResponse.loopCount', 0);
 
     switch (botResp.dialogState) {
